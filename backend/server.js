@@ -42,6 +42,19 @@ app.post("/create", (req, res) => {
     });
 });
 
+app.post("/toProgress/:id", async (req, res) => {
+  console.log("req.params.id", req.params.id);
+  await Todo.findByIdAndUpdate(req.params.id, {
+    todo: false,
+    inProgress: true,
+    done: false,
+    deleted: false,
+  });
+
+  const todos = await Todo.find();
+  res.json(todos);
+});
+
 // app.post('/create', (req, res) => {
 //   console.log('req', req);
 //   const todo = new Todo({

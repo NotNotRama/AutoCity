@@ -1,5 +1,5 @@
 export interface Todo {
-  _id?: String;
+  _id: number;
   text: string;
   todo: boolean;
   inProgress: boolean;

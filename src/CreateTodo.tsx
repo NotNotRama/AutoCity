@@ -4,6 +4,7 @@ import { Todo } from "./Types/TodoTypes";
 export const CreateTodo = () => {
   const defaultTodos = [
     {
+      _id: 1,
       text: "do the take home project",
       todo: true,
       inProgress: false,
@@ -11,7 +12,7 @@ export const CreateTodo = () => {
       deleted: true,
     },
   ];
-  const [items, setItems] = useState<Todo[]>([]);
+  const [items, setItems] = useState<Todo[]>(defaultTodos);
   const [name, setName] = useState<string>("");
 
   useEffect(() => {

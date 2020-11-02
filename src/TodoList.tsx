@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Todo } from './Types/TodoTypes';
+import React, { useState, useEffect } from "react";
+import { Todo } from "./Types/TodoTypes";
 
 export const TodoList = () => {
   const defaultTodos = [
     {
-      text: 'do the take home project',
+      _id: 1,
+      text: "do the take home project",
       todo: true,
       inProgress: false,
       done: false,
       deleted: false,
     },
     {
-      text: 'upload it to github',
+      _id: 2,
+      text: "upload it to github",
       todo: false,
       inProgress: true,
       done: false,
@@ -19,14 +21,30 @@ export const TodoList = () => {
     },
   ];
 
-  const [items, setItems] = useState<Todo[]>([]);
+  const [items, setItems] = useState<Todo[]>(defaultTodos);
+  console.log("items", items);
 
   useEffect(() => {
     const fetchItems = async () => {
-      setItems(defaultTodos);
+      const res = await fetch("http://localhost:4000/");
+      const todos = await res.json();
+      setItems(todos);
     };
     fetchItems();
   }, []);
+
+  const toProgress = async (id: number) => {
+    const res = await fetch(`http://localhost:4000/toProgress/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+    });
+    const todos = await res.json();
+    console.log("in progress todo", todos);
+    setItems(todos);
+  };
 
   return (
     <div>
@@ -41,7 +59,7 @@ export const TodoList = () => {
               <div>
                 <div>{todo.text}</div>
 
-                <button>In Progress Button</button>
+                <button onClick={() => toProgress(todo._id)}>Send to Progress</button>
               </div>
             ))}
         </div>
