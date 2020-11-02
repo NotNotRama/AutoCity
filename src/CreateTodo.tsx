@@ -12,15 +12,19 @@ export const CreateTodo = () => {
       deleted: true,
     },
   ];
-  const [items, setItems] = useState<Todo[]>(defaultTodos);
-  const [name, setName] = useState<string>("");
+  const [items, setItems] = useState<Todo[]>([]);
+  const [title, setTitle] = useState<string>("");
+  const [desc, setDesc] = useState<string>("");
 
   useEffect(() => {
     const fetchItems = async () => {
-      setItems(defaultTodos);
+      const res = await fetch("http://localhost:4000/");
+      const todos = await res.json();
+      setItems(todos);
     };
     fetchItems();
   }, []);
+
   const handleSubmit = async (evt: { preventDefault: () => void }) => {
     evt.preventDefault();
     await fetch("http://localhost:4000/create", {
@@ -30,10 +34,12 @@ export const CreateTodo = () => {
         "Accept": "application/json",
       },
       body: JSON.stringify({
-        text: name,
+        title: title,
+        description: desc,
       }),
     });
-    setName("");
+    setTitle("");
+    setDesc("");
   };
 
   return (
@@ -42,7 +48,10 @@ export const CreateTodo = () => {
         <h3>Add Todo</h3>
         <div>
           <form onSubmit={handleSubmit}>
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            <h1>Title</h1>
+            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+            <h1>Description</h1>
+            <input type="text" value={desc} onChange={(e) => setDesc(e.target.value)} />
 
             <input type="submit" value="Submit" />
           </form>
@@ -52,7 +61,7 @@ export const CreateTodo = () => {
               .filter((todo) => todo.deleted)
               .map((todo) => (
                 <ul>
-                  <li>{todo.text}</li>
+                  <li>{todo.title}</li>
                 </ul>
               ))}
           </div>

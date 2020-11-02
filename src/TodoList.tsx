@@ -21,7 +21,7 @@ export const TodoList = () => {
     },
   ];
 
-  const [items, setItems] = useState<Todo[]>(defaultTodos);
+  const [items, setItems] = useState<Todo[]>([]);
   console.log("items", items);
 
   useEffect(() => {
@@ -42,7 +42,17 @@ export const TodoList = () => {
       },
     });
     const todos = await res.json();
-    console.log("in progress todo", todos);
+    setItems(todos);
+  };
+  const deleteTodo = async (id: number) => {
+    const res = await fetch(`http://localhost:4000/deleteTodo/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+    });
+    const todos = await res.json();
     setItems(todos);
   };
 
@@ -57,7 +67,8 @@ export const TodoList = () => {
             .filter((todo: Todo) => todo.todo)
             .map((todo: Todo) => (
               <div>
-                <div>{todo.text}</div>
+                <div>{todo.title}</div>
+                <div>{todo.description}</div>
 
                 <button onClick={() => toProgress(todo._id)}>Send to Progress</button>
               </div>
@@ -69,9 +80,10 @@ export const TodoList = () => {
             .filter((todo: Todo) => todo.inProgress)
             .map((todo: Todo) => (
               <div>
-                <div>{todo.text}</div>
+                <div>{todo.title}</div>
+                <div>{todo.description}</div>
 
-                <button>Delete Button</button>
+                <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
               </div>
             ))}
         </div>

@@ -1,6 +1,7 @@
 export interface Todo {
   _id: number;
-  text: string;
+  title: string;
+  description: string;
   todo: boolean;
   inProgress: boolean;
   done: boolean;

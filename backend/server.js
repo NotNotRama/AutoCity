@@ -29,7 +29,8 @@ app.get("/", (req, res) => {
 app.post("/create", (req, res) => {
   console.log(req);
   const todo = new Todo({
-    text: req.body.text,
+    title: req.body.title,
+    description: req.body.description,
   });
 
   todo
@@ -49,6 +50,18 @@ app.post("/toProgress/:id", async (req, res) => {
     inProgress: true,
     done: false,
     deleted: false,
+  });
+
+  const todos = await Todo.find();
+  res.json(todos);
+});
+app.post("/deleteTodo/:id", async (req, res) => {
+  console.log("req.params.id", req.params.id);
+  await Todo.findByIdAndUpdate(req.params.id, {
+    todo: false,
+    inProgress: false,
+    done: false,
+    deleted: true,
   });
 
   const todos = await Todo.find();
