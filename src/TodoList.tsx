@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Todo } from "./Types/TodoTypes";
 
 export const TodoList = () => {
@@ -71,6 +72,7 @@ export const TodoList = () => {
                 <div>{todo.description}</div>
 
                 <button onClick={() => toProgress(todo._id)}>Send to Progress</button>
+                <Link to={`/edit/${todo._id}`}>Edit</Link>
               </div>
             ))}
         </div>
@@ -84,6 +86,7 @@ export const TodoList = () => {
                 <div>{todo.description}</div>
 
                 <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
+                <Link to={`/edit/${todo._id}`}>Edit</Link>
               </div>
             ))}
         </div>

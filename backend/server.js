@@ -43,6 +43,32 @@ app.post("/create", (req, res) => {
     });
 });
 
+app.get("/:id", (req, res) => {
+  const id = req.params.id;
+  Todo.findById(id, (err, todo) => {
+    res.json(todo);
+  });
+});
+
+app.post("/:id", (req, res) => {
+  const id = req.params.id;
+  Todo.findById(id, (err, todo) => {
+    if (!todo) {
+      res.status(404).send("Todo not found");
+    } else {
+      todo.title = req.body.title;
+      todo.description = req.body.description;
+
+      todo
+        .save()
+        .then((todo) => {
+          res.json(todo);
+        })
+        .catch((err) => res.status(500).send(err.message));
+    }
+  });
+});
+
 app.post("/toProgress/:id", async (req, res) => {
   console.log("req.params.id", req.params.id);
   await Todo.findByIdAndUpdate(req.params.id, {
@@ -67,26 +93,6 @@ app.post("/deleteTodo/:id", async (req, res) => {
   const todos = await Todo.find();
   res.json(todos);
 });
-
-// app.post('/create', (req, res) => {
-//   console.log('req', req);
-//   const todo = new Todo({
-//     text: req.body.text,
-//     todo: true,
-//     inProgress: false,
-//     done: false,
-//     deleted: false,
-//   });
-
-//   todo
-//     .save()
-//     .then((todo) => {
-//       res.json(todo);
-//     })
-//     .catch((err) => {
-//       res.status(500).send(err.message);
-//     });
-// });
 
 app.listen(PORT, () => {
   console.log("Server is running on port " + PORT);

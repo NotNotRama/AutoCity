@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Todo } from "./Types/TodoTypes";
 
 export const CreateTodo = () => {
@@ -14,6 +15,7 @@ export const CreateTodo = () => {
   ];
   const [items, setItems] = useState<Todo[]>([]);
   const [title, setTitle] = useState<string>("");
+  const history = useHistory();
   const [desc, setDesc] = useState<string>("");
 
   useEffect(() => {
@@ -40,6 +42,7 @@ export const CreateTodo = () => {
     });
     setTitle("");
     setDesc("");
+    history.push("/");
   };
 
   return (
