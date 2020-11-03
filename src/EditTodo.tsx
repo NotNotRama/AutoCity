@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouteMatch, useHistory, RouteProps } from "react-router-dom";
 import { Todo } from "./Types/TodoTypes";
+import Edit from "./styles/EditTodo/Edit";
 
 export const EditTodo = () => {
-  const match = useRouteMatch<any>();
+  const match = useRouteMatch<{ id: string }>();
   const [todo, setTodo] = useState<Todo | undefined>();
   const [title, setTitle] = useState<string>("");
   const [desc, setDesc] = useState<string>("");
@@ -40,19 +41,17 @@ export const EditTodo = () => {
   };
 
   return todo ? (
-    <div>
+    <Edit>
       <form onSubmit={handleSubmit}>
-        <div>
-          <h1>Title</h1>
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-        </div>
-        <div>
-          <h1>Description</h1>
-          <input type="text" value={desc} onChange={(e) => setDesc(e.target.value)} />
-        </div>
+        <h1>Edit Todo</h1>
+
+        <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+
+        <input type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} />
+
         <input type="submit" value="Submit" />
       </form>
-    </div>
+    </Edit>
   ) : (
     <div>Loading</div>
   );

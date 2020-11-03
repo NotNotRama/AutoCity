@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Todo } from "./Types/TodoTypes";
+import CreateTodoDiv from "./styles/CreateTodo/CreateTodoDiv";
+import NewTask from "./styles/CreateTodo/NewTask";
+import DeletedTodos from "./styles/CreateTodo/DeletedTodos";
 
 export const CreateTodo = () => {
   const defaultTodos = [
@@ -46,30 +49,31 @@ export const CreateTodo = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h3>Add Todo</h3>
-        <div>
-          <form onSubmit={handleSubmit}>
-            <h1>Title</h1>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-            <h1>Description</h1>
-            <input type="text" value={desc} onChange={(e) => setDesc(e.target.value)} />
+    <CreateTodoDiv>
+      <NewTask>
+        <h3>New Task</h3>
 
-            <input type="submit" value="Submit" />
-          </form>
-          <h1>Deleted todos</h1>
+        <form onSubmit={handleSubmit}>
           <div>
-            {items
-              .filter((todo) => todo.deleted)
-              .map((todo) => (
-                <ul>
-                  <li>{todo.title}</li>
-                </ul>
-              ))}
+            <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
+
+            <input type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} />
           </div>
+          <input type="submit" value="Submit" />
+        </form>
+      </NewTask>
+      <DeletedTodos>
+        <h1>Deleted todos</h1>
+        <div>
+          {items
+            .filter((todo) => todo.deleted)
+            .map((todo) => (
+              <ul>
+                <li>{todo.title}</li>
+              </ul>
+            ))}
         </div>
-      </div>
-    </div>
+      </DeletedTodos>
+    </CreateTodoDiv>
   );
 };

@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Todo } from "./Types/TodoTypes";
+import List from "./styles/TodoList/List";
+import TodoCard from "./styles/TodoList/TodoCard";
+import Title from "./styles/TodoList/Title";
+import { AiFillDelete } from "react-icons/ai";
 
 export const TodoList = () => {
   const defaultTodos = [
@@ -69,54 +73,53 @@ export const TodoList = () => {
   };
 
   return (
-    <div>
+    <List>
       <div>
-        <h3>Todo List</h3>
+        <Title>Todo</Title>
+        {items
+          .filter((todo: Todo) => todo.todo)
+          .map((todo: Todo) => (
+            <TodoCard>
+              <div>{todo.title}</div>
+              <div>{todo.description}</div>
 
-        <div>
-          <h1>Todo</h1>
-          {items
-            .filter((todo: Todo) => todo.todo)
-            .map((todo: Todo) => (
-              <div>
-                <div>{todo.title}</div>
-                <div>{todo.description}</div>
+              <button onClick={() => toProgress(todo._id)}>Send to Progress</button>
+              <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
 
-                <button onClick={() => toProgress(todo._id)}>Send to Progress</button>
-                <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
-                <Link to={`/edit/${todo._id}`}>Edit</Link>
-              </div>
-            ))}
-        </div>
-        <div>
-          <h1>In Progress</h1>
-          {items
-            .filter((todo: Todo) => todo.inProgress)
-            .map((todo: Todo) => (
-              <div>
-                <div>{todo.title}</div>
-                <div>{todo.description}</div>
-                <button onClick={() => completeTodo(todo._id)}>Send to Done</button>
-                <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
-                <Link to={`/edit/${todo._id}`}>Edit</Link>
-              </div>
-            ))}
-        </div>
-        <div>
-          <h1>Done</h1>
-          {items
-            .filter((todo: Todo) => todo.done)
-            .map((todo: Todo) => (
-              <div>
-                <div>{todo.title}</div>
-                <div>{todo.description}</div>
-
-                <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
-                <Link to={`/edit/${todo._id}`}>Edit</Link>
-              </div>
-            ))}
-        </div>
+              <Link to={`/edit/${todo._id}`}>Edit</Link>
+            </TodoCard>
+          ))}
       </div>
-    </div>
+      <div>
+        <Title>In Progress</Title>
+        {items
+          .filter((todo: Todo) => todo.inProgress)
+          .map((todo: Todo) => (
+            <TodoCard>
+              <div>{todo.title}</div>
+              <div>{todo.description}</div>
+              <button onClick={() => completeTodo(todo._id)}>Send to Done</button>
+              <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
+              <Link to={`/edit/${todo._id}`}>Edit</Link>
+
+              <AiFillDelete />
+            </TodoCard>
+          ))}
+      </div>
+      <div>
+        <Title>Done</Title>
+        {items
+          .filter((todo: Todo) => todo.done)
+          .map((todo: Todo) => (
+            <TodoCard>
+              <div>{todo.title}</div>
+              <div>{todo.description}</div>
+
+              <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
+              <Link to={`/edit/${todo._id}`}>Edit</Link>
+            </TodoCard>
+          ))}
+      </div>
+    </List>
   );
 };
