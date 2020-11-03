@@ -1809,6 +1809,14 @@
   dependencies:
     "@types/styled-components" "*"
 
+"@types/xstyled__system@^1.19.2":
+  version "1.19.2"
+  resolved "https://registry.yarnpkg.com/@types/xstyled__system/-/xstyled__system-1.19.2.tgz#8ef4e1fada4630edb80d48de882ffc70844991d3"
+  integrity sha512-CL/u01feL5JFdBLVlwgbqRQzlh7/svfbL/1RmJgZvDMkjvYje0cYKBualcUQpcomqpMcUZZpctUCKgAGY34CUw==
+  dependencies:
+    "@types/react" "*"
+    csstype "^3.0.2"
+
 "@types/yargs-parser@*":
   version "15.0.0"
   resolved "https://registry.yarnpkg.com/@types/yargs-parser/-/yargs-parser-15.0.0.tgz#cb3f9f741869e20cce330ffbeb9271590483882d"

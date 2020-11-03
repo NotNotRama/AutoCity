@@ -1,18 +1,23 @@
 import styled from "@xstyled/styled-components";
 
-const TodoCard = styled.div`
+const TodoCard = styled.div<{ arrowColor?: string; deleteColor?: string; editColor?: string }>`
   height: 30rem;
-  width: 20rem;
+  width: 40rem;
   display: flex;
   margin-top: 1rem;
   flex-direction: column;
   justify-content: space-around;
-  background-color: violet;
+  background-color: #dfeef0;
 
-  svg {
-    width: 10rem;
-    height: 10rem;
-    color: red;
+  h1 {
+    font-weight: 600;
+    padding-left: 1.5rem;
+  }
+
+  p {
+    font-weight: 300;
+    padding-left: 1.5rem;
+    font-size: 1.6rem;
   }
 `;
 

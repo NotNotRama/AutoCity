@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useRouteMatch, useHistory, RouteProps, Link } from "react-router-dom";
 import { Todo } from "./Types/TodoTypes";
 import List from "./styles/TodoList/List";
 import TodoCard from "./styles/TodoList/TodoCard";
+import Icons from "./styles/TodoList/Icons";
 import Title from "./styles/TodoList/Title";
 import { AiFillDelete } from "react-icons/ai";
+import { AiFillEdit } from "react-icons/ai";
+import { RiSendPlaneFill } from "react-icons/ri";
 
 export const TodoList = () => {
   const defaultTodos = [
@@ -28,6 +31,7 @@ export const TodoList = () => {
 
   const [items, setItems] = useState<Todo[]>([]);
   console.log("items", items);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchItems = async () => {
@@ -72,51 +76,57 @@ export const TodoList = () => {
     setItems(todos);
   };
 
+  const handleEdit = (id: number) => {
+    history.push(`/edit/${id}`);
+  };
+
   return (
     <List>
       <div>
-        <Title>Todo</Title>
+        <Title titleColor="#03458C">Todo</Title>
         {items
           .filter((todo: Todo) => todo.todo)
           .map((todo: Todo) => (
-            <TodoCard>
-              <div>{todo.title}</div>
-              <div>{todo.description}</div>
+            <TodoCard arrowColor="#E87A05">
+              <h1>{todo.title}</h1>
+              <p>{todo.description}</p>
 
-              <button onClick={() => toProgress(todo._id)}>Send to Progress</button>
-              <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
-
-              <Link to={`/edit/${todo._id}`}>Edit</Link>
+              <Icons arrowColor="#E87A05">
+                <AiFillEdit onClick={() => handleEdit(todo._id)} />
+                <AiFillDelete onClick={() => deleteTodo(todo._id)} />
+                <RiSendPlaneFill onClick={() => toProgress(todo._id)} />
+              </Icons>
             </TodoCard>
           ))}
       </div>
       <div>
-        <Title>In Progress</Title>
+        <Title titleColor="#E87A05">In Progress</Title>
         {items
           .filter((todo: Todo) => todo.inProgress)
           .map((todo: Todo) => (
-            <TodoCard>
-              <div>{todo.title}</div>
-              <div>{todo.description}</div>
-              <button onClick={() => completeTodo(todo._id)}>Send to Done</button>
-              <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
-              <Link to={`/edit/${todo._id}`}>Edit</Link>
-
-              <AiFillDelete />
+            <TodoCard arrowColor="#008727" deleteColor="red" editColor="grey">
+              <h1>{todo.title}</h1>
+              <p>{todo.description}</p>
+              <Icons arrowColor="#008727">
+                <AiFillEdit onClick={() => handleEdit(todo._id)} />
+                <AiFillDelete onClick={() => deleteTodo(todo._id)} />
+                <RiSendPlaneFill onClick={() => completeTodo(todo._id)} />
+              </Icons>
             </TodoCard>
           ))}
       </div>
       <div>
-        <Title>Done</Title>
+        <Title titleColor="#008727">Done</Title>
         {items
           .filter((todo: Todo) => todo.done)
           .map((todo: Todo) => (
             <TodoCard>
-              <div>{todo.title}</div>
-              <div>{todo.description}</div>
-
-              <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
-              <Link to={`/edit/${todo._id}`}>Edit</Link>
+              <h1>{todo.title}</h1>
+              <p>{todo.description}</p>
+              <Icons>
+                <AiFillEdit onClick={() => handleEdit(todo._id)} />
+                <AiFillDelete onClick={() => deleteTodo(todo._id)} />
+              </Icons>
             </TodoCard>
           ))}
       </div>

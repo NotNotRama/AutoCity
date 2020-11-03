@@ -2,12 +2,13 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:300i,400&display=swap');
 
 * {
     margin: 0;
     padding: 0;
 }
+
+
 
 *,
 *::before,
@@ -20,11 +21,11 @@ html {
     font-size: 62.5%; 
     position: relative;
     
-  background: grey;
+    background-color: #f3f3f2;
 }
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Lato', sans-serif;
 }
 `;
 

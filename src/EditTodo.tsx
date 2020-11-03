@@ -49,7 +49,9 @@ export const EditTodo = () => {
 
         <input type="text" placeholder="Description" value={desc} onChange={(e) => setDesc(e.target.value)} />
 
-        <input type="submit" value="Submit" />
+        <button type="submit" value="Submit">
+          Submit
+        </button>
       </form>
     </Edit>
   ) : (
