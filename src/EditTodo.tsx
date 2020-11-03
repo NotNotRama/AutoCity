@@ -2,10 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useRouteMatch, useHistory, RouteProps } from "react-router-dom";
 import { Todo } from "./Types/TodoTypes";
 
-interface RouteInfo extends RouteProps {
-  id: string;
-}
-
 export const EditTodo = () => {
   const match = useRouteMatch<any>();
   const [todo, setTodo] = useState<Todo | undefined>();

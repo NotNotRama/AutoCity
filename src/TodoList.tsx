@@ -56,6 +56,17 @@ export const TodoList = () => {
     const todos = await res.json();
     setItems(todos);
   };
+  const completeTodo = async (id: number) => {
+    const res = await fetch(`http://localhost:4000/completeTodo/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+    });
+    const todos = await res.json();
+    setItems(todos);
+  };
 
   return (
     <div>
@@ -72,6 +83,7 @@ export const TodoList = () => {
                 <div>{todo.description}</div>
 
                 <button onClick={() => toProgress(todo._id)}>Send to Progress</button>
+                <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
                 <Link to={`/edit/${todo._id}`}>Edit</Link>
               </div>
             ))}
@@ -80,6 +92,20 @@ export const TodoList = () => {
           <h1>In Progress</h1>
           {items
             .filter((todo: Todo) => todo.inProgress)
+            .map((todo: Todo) => (
+              <div>
+                <div>{todo.title}</div>
+                <div>{todo.description}</div>
+                <button onClick={() => completeTodo(todo._id)}>Send to Done</button>
+                <button onClick={() => deleteTodo(todo._id)}>Delete Button</button>
+                <Link to={`/edit/${todo._id}`}>Edit</Link>
+              </div>
+            ))}
+        </div>
+        <div>
+          <h1>Done</h1>
+          {items
+            .filter((todo: Todo) => todo.done)
             .map((todo: Todo) => (
               <div>
                 <div>{todo.title}</div>

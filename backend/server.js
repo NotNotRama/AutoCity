@@ -81,6 +81,19 @@ app.post("/toProgress/:id", async (req, res) => {
   const todos = await Todo.find();
   res.json(todos);
 });
+app.post("/completeTodo/:id", async (req, res) => {
+  console.log("req.params.id", req.params.id);
+  await Todo.findByIdAndUpdate(req.params.id, {
+    todo: false,
+    inProgress: false,
+    done: true,
+    deleted: false,
+  });
+
+  const todos = await Todo.find();
+  res.json(todos);
+});
+
 app.post("/deleteTodo/:id", async (req, res) => {
   console.log("req.params.id", req.params.id);
   await Todo.findByIdAndUpdate(req.params.id, {
