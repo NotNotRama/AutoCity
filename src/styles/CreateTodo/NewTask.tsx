@@ -7,7 +7,7 @@ const NewTask = styled.div`
   flex-direction: column;
   padding-left: 10rem;
   justify-content: space-evenly;
-  background-color: yellow;
+  background-color: #f3f3f2;
 `;
 
 export default NewTask;
